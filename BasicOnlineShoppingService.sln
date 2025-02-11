@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicOnlineShoppingService.App", "BasicOnlineShoppingService.App\BasicOnlineShoppingService.App.csproj", "{86B7413A-806F-4609-BB4B-D29E672E3290}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86B7413A-806F-4609-BB4B-D29E672E3290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86B7413A-806F-4609-BB4B-D29E672E3290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86B7413A-806F-4609-BB4B-D29E672E3290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86B7413A-806F-4609-BB4B-D29E672E3290}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
