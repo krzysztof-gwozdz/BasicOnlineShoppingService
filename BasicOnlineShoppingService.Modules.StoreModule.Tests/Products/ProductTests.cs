@@ -1,4 +1,5 @@
-﻿using BasicOnlineShoppingService.Modules.StoreModule.Products;
+﻿using BasicOnlineShoppingService.Common.Exceptions;
+using BasicOnlineShoppingService.Modules.StoreModule.Products;
 using Shouldly;
 using Xunit;
 
@@ -27,66 +28,32 @@ public class ProductTests
     }
     
     [Fact]
-    public void Creating_product_with_empty_name_throws_exception()
+    public void Creating_product_with_invalid_data_throws_exception()
     {
         // arrange
         const string name = "";
-        const string description = "Description 1";
-        const int price = 100;
-        const string category = "Category 1";
-
-        // act
-        var create = () => Product.Create(name, description, price, category);
-
-        // assert
-        create.ShouldThrow<ValidationException>().Message.ShouldBe("Name cannot be empty");
-    }
-    
-    [Fact]
-    public void Creating_product_with_empty_description_throws_exception()
-    {
-        // arrange
-        const string name = "Product 1";
         const string description = "";
-        const int price = 100;
-        const string category = "Category 1";
-
-        // act
-        var create = () => Product.Create(name, description, price, category);
-
-        // assert
-        create.ShouldThrow<ValidationException>().Message.ShouldBe("Description cannot be empty");
-    }
-    
-    [Fact]
-    public void Creating_product_with_negative_price_throws_exception()
-    {
-        // arrange
-        const string name = "Product 1";
-        const string description = "Description 1";
-        const int price = -100;
-        const string category = "Category 1";
-
-        // act
-        var create = () => Product.Create(name, description, price, category);
-
-        // assert
-        create.ShouldThrow<ValidationException>().Message.ShouldBe("Price cannot be negative");
-    }
-    
-    [Fact]
-    public void Creating_product_with_empty_category_throws_exception()
-    {
-        // arrange
-        const string name = "Product 1";
-        const string description = "Description 1";
-        const int price = 100;
+        const int price = -10;
         const string category = "";
 
         // act
         var create = () => Product.Create(name, description, price, category);
 
         // assert
-        create.ShouldThrow<ValidationException>().Message.ShouldBe("Category cannot be empty");
+        var exception = create.ShouldThrow<ValidationException>();
+        exception.Message.ShouldBe("validation_error: An error occurred during validation.");
+        exception.Errors.Count.ShouldBe(4);
+        var nameError = exception.Errors.SingleOrDefault(x => x.Title == "invalid_name");
+        nameError.ShouldNotBeNull();
+        nameError.Detail.ShouldBe("Name cannot be empty");
+        var descriptionError = exception.Errors.SingleOrDefault(x => x.Title == "invalid_description");
+        descriptionError.ShouldNotBeNull();
+        descriptionError.Detail.ShouldBe("Description cannot be empty");
+        var priceError = exception.Errors.SingleOrDefault(x => x.Title == "invalid_price");
+        priceError.ShouldNotBeNull();
+        priceError.Detail.ShouldBe("Price cannot be negative");
+        var categoryError = exception.Errors.SingleOrDefault(x => x.Title == "invalid_category");
+        categoryError.ShouldNotBeNull();
+        categoryError.Detail.ShouldBe("Category cannot be empty");
     }
 }

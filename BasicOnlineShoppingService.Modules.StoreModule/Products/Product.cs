@@ -1,4 +1,6 @@
-﻿namespace BasicOnlineShoppingService.Modules.StoreModule.Products;
+﻿using BasicOnlineShoppingService.Common.Exceptions;
+
+namespace BasicOnlineShoppingService.Modules.StoreModule.Products;
 
 internal class Product
 {
@@ -25,21 +27,24 @@ internal class Product
     
     private static void Validate(string name, string description, decimal price, string category)
     {
+        var errors = new ValidationErrorsSet();
         if (string.IsNullOrWhiteSpace(name))
         {
-            throw new ValidationException(nameof(name), "Name cannot be empty");
+            errors.Add("invalid_name", "Name cannot be empty");
         }
         if (string.IsNullOrWhiteSpace(description))
         {
-            throw new ValidationException(nameof(description), "Description cannot be empty");
+            errors.Add("invalid_description", "Description cannot be empty");
         }
         if (price < 0)
         {
-            throw new ValidationException(nameof(price), "Price cannot be negative");
+            errors.Add("invalid_price", "Price cannot be negative");
         }
         if (string.IsNullOrWhiteSpace(category))
         {
-            throw new ValidationException(nameof(category), "Category cannot be empty");
+            errors.Add("invalid_category", "Category cannot be empty");
         }
+        if (errors.HasError)
+            throw new ValidationException(errors);
     }
 }
