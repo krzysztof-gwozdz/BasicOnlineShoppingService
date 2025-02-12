@@ -10,7 +10,7 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        AddModules(services);
+        AddModules(services, configuration);
         services.AddControllers().ConfigureApplicationPartManager(manager =>
         {
             manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
@@ -25,10 +25,10 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
         app.UseConfiguredSwagger();
     }
 
-    private static void AddModules(IServiceCollection services) =>
+    private static void AddModules(IServiceCollection services, IConfiguration configuration) =>
         services
             .AddCartModule()
             .AddOrderModule()
             .AddReportModule()
-            .AddStoreModule();
+            .AddStoreModule(configuration);
 }
