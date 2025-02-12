@@ -11,12 +11,14 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
     {
         AddModules(services);
         services.AddControllers();
+        services.AddConfiguredSwagger();
     }
 
     public void Configure(IApplicationBuilder app)
     {
         app.UseRouting();
         app.UseEndpoints(endpoints => endpoints.MapControllers());
+        app.UseConfiguredSwagger();
     }
 
     private static void AddModules(IServiceCollection services) =>
