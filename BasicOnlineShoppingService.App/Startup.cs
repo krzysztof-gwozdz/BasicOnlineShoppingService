@@ -1,4 +1,5 @@
 using BasicOnlineShoppingService.App.Api;
+using BasicOnlineShoppingService.App.Api.ErrorHandling;
 using BasicOnlineShoppingService.Modules.CartModule;
 using BasicOnlineShoppingService.Modules.OrderModule;
 using BasicOnlineShoppingService.Modules.Report;
@@ -11,6 +12,7 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
     public void ConfigureServices(IServiceCollection services)
     {
         AddModules(services, configuration);
+        services.AddErrorHandling(environment);
         services.AddControllers().ConfigureApplicationPartManager(manager =>
         {
             manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
@@ -20,6 +22,7 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
 
     public void Configure(IApplicationBuilder app)
     {
+        app.UseErrorHandling();
         app.UseRouting();
         app.UseEndpoints(endpoints => endpoints.MapControllers());
         app.UseConfiguredSwagger();
