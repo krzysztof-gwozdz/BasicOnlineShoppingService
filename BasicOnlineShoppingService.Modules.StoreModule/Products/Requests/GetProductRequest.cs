@@ -1,3 +1,4 @@
+using BasicOnlineShoppingService.Common;
 using MongoDB.Driver;
 
 namespace BasicOnlineShoppingService.Modules.StoreModule.Products.Requests;

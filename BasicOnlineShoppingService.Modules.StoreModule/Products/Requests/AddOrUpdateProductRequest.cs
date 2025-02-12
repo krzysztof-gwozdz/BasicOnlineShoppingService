@@ -1,3 +1,4 @@
+using BasicOnlineShoppingService.Common;
 using BasicOnlineShoppingService.Modules.StoreModule.Products.Dtos;
 using MongoDB.Driver;
 

@@ -19,4 +19,8 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BasicOnlineShoppingService.Common\BasicOnlineShoppingService.Common.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using BasicOnlineShoppingService.Modules.StoreModule.MongoDb;
+﻿using BasicOnlineShoppingService.Common;
+using BasicOnlineShoppingService.Modules.StoreModule.MongoDb;
 
 namespace BasicOnlineShoppingService.Modules.StoreModule;
 
