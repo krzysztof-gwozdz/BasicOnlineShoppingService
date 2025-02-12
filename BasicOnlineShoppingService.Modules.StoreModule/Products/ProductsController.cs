@@ -39,7 +39,7 @@ internal class ProductsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var productId = await addProductRequest.Handle(addProductDto, cancellationToken);
-        return CreatedAtAction(nameof(Get), new { id = productId });
+        return CreatedAtAction(nameof(Get), new { id = productId }, null);
     }
 
     [HttpPut("{id:guid}")]
