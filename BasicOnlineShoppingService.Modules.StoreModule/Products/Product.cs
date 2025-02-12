@@ -8,7 +8,7 @@ internal class Product
     public decimal Price { get; private set; }
     public string Category { get; private set; }
     
-    private Product(Guid id, string name, string description, decimal price, string category)
+    internal Product(Guid id, string name, string description, decimal price, string category)
     {
         Id = id;
         Name = name;

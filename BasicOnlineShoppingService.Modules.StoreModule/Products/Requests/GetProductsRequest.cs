@@ -1,19 +1,12 @@
-﻿namespace BasicOnlineShoppingService.Modules.StoreModule.Products.Requests;
+﻿using MongoDB.Driver;
 
-internal class GetProductsRequest : IRequest
+namespace BasicOnlineShoppingService.Modules.StoreModule.Products.Requests;
+
+internal class GetProductsRequest(ProductsMongoContext productsMongoContext) : IRequest
 {
-    public Task<Product[]> Handle(CancellationToken cancellationToken)
+    public async Task<Product[]> Handle(CancellationToken cancellationToken)
     {
-        var products = new[]
-        {
-            Product.Create("Cheap product", "This is a cheap product", 1.99m, "other"),
-            Product.Create("Normal product", "This is a normal product", 9.99m, "other"),
-            Product.Create("Expensive product", "This is an expensive product", 99.99m, "other"),
-            
-            Product.Create("Apple", "This is an apple", 1.99m, "food"),
-            Product.Create("Banana", "This is a banana", 0.99m, "food"),
-            Product.Create("Orange", "This is an orange", 1.49m, "food"),
-        };
-        return Task.FromResult(products);
+        var products = await (await productsMongoContext.Collection.FindAsync(_ => true, cancellationToken: cancellationToken)).ToListAsync(cancellationToken: cancellationToken);
+        return products.Select(product => new Product(product.Id, product.Name, product.Description, product.Price, product.Category)).ToArray();
     }
 }

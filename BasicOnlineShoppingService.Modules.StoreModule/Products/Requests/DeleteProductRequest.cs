@@ -1,9 +1,12 @@
+using MongoDB.Driver;
+
 namespace BasicOnlineShoppingService.Modules.StoreModule.Products.Requests;
 
-internal class DeleteProductRequest : IRequest
+internal class DeleteProductRequest(ProductsMongoContext productsMongoContext) : IRequest
 {
-    public Task Handle(Guid id, CancellationToken cancellationToken)
+    public async Task Handle(Guid id, CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        var filter = Builders<ProductEntity>.Filter.Eq(productEntity => productEntity.Id, id);
+        await productsMongoContext.Collection.FindOneAndDeleteAsync(filter, cancellationToken: cancellationToken);
     }
 }
