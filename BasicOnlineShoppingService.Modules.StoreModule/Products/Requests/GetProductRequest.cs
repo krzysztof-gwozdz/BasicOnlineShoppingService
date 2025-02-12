@@ -1,4 +1,5 @@
 using BasicOnlineShoppingService.Common;
+using BasicOnlineShoppingService.Common.Exceptions;
 using MongoDB.Driver;
 
 namespace BasicOnlineShoppingService.Modules.StoreModule.Products.Requests;
@@ -9,6 +10,10 @@ internal class GetProductRequest(ProductsMongoContext productsMongoContext) : IR
     {
         var filter = Builders<ProductEntity>.Filter.Eq(productEntity => productEntity.Id, id);
         var product = await (await productsMongoContext.Collection.FindAsync(filter, cancellationToken: cancellationToken)).FirstOrDefaultAsync(cancellationToken);
+        if (product is null)
+        {
+            throw new NotFoundException(nameof(ProductEntity), $"with id: {id}");
+        }
         return new Product(product.Id, product.Name, product.Description, product.Price, product.Category);
     }
 }
