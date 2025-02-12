@@ -16,4 +16,11 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BasicOnlineShoppingService.Modules.CartModule\BasicOnlineShoppingService.Modules.CartModule.csproj" />
+      <ProjectReference Include="..\BasicOnlineShoppingService.Modules.OrderModule\BasicOnlineShoppingService.Modules.OrderModule.csproj" />
+      <ProjectReference Include="..\BasicOnlineShoppingService.Modules.Report\BasicOnlineShoppingService.Modules.Report.csproj" />
+      <ProjectReference Include="..\BasicOnlineShoppingService.Modules.StoreModule\BasicOnlineShoppingService.Modules.StoreModule.csproj" />
+    </ItemGroup>
+
 </Project>

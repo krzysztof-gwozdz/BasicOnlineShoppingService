@@ -1,10 +1,17 @@
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddOpenApi();
+namespace BasicOnlineShoppingService.App;
 
-var app = builder.Build();
-if (app.Environment.IsDevelopment())
+public class Program
 {
-    app.MapOpenApi();
+    protected Program()
+    {
+    }
+
+    public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+                webBuilder
+                    .ConfigureAppConfiguration(configure => configure.AddJsonFile("appsettings.User.json", true))
+                    .UseStartup<Startup>());
 }
-app.UseHttpsRedirection();
-app.Run();
