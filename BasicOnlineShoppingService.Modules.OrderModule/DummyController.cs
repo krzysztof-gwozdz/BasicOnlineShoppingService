@@ -5,7 +5,7 @@ namespace BasicOnlineShoppingService.Modules.OrderModule;
 
 [ApiController]
 [Route("api/v1/order-module")]
-public class DummyController : ControllerBase
+internal class DummyController : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]

@@ -1,3 +1,4 @@
+using BasicOnlineShoppingService.App.Api;
 using BasicOnlineShoppingService.Modules.CartModule;
 using BasicOnlineShoppingService.Modules.OrderModule;
 using BasicOnlineShoppingService.Modules.Report;
@@ -10,7 +11,10 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
     public void ConfigureServices(IServiceCollection services)
     {
         AddModules(services);
-        services.AddControllers();
+        services.AddControllers().ConfigureApplicationPartManager(manager =>
+        {
+            manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
+        });
         services.AddConfiguredSwagger();
     }
 

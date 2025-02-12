@@ -5,7 +5,7 @@ namespace BasicOnlineShoppingService.Modules.StoreModule;
 
 [ApiController]
 [Route("api/v1/store-module")]
-public class DummyController : ControllerBase
+internal class DummyController : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]

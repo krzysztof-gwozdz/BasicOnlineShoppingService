@@ -1,4 +1,4 @@
-﻿namespace BasicOnlineShoppingService.App;
+﻿namespace BasicOnlineShoppingService.App.Api;
 
 public static class SwaggerExtensions
 {
