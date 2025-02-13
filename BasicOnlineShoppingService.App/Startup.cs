@@ -18,6 +18,7 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
             manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
         });
         services.AddConfiguredSwagger();
+        services.AddServiceBus();
     }
 
     public void Configure(IApplicationBuilder app)
