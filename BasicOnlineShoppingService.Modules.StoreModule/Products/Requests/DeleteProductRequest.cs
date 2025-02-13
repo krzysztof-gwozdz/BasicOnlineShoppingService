@@ -1,10 +1,12 @@
 using BasicOnlineShoppingService.Common;
 using BasicOnlineShoppingService.Common.Exceptions;
+using BasicOnlineShoppingService.Modules.StoreModule.Products.Events;
+using MassTransit;
 using MongoDB.Driver;
 
 namespace BasicOnlineShoppingService.Modules.StoreModule.Products.Requests;
 
-internal class DeleteProductRequest(ProductsMongoContext productsMongoContext) : IRequest
+internal class DeleteProductRequest(ProductsMongoContext productsMongoContext, IPublishEndpoint publishEndpoint) : IRequest
 {
     public async Task Handle(Guid id, CancellationToken cancellationToken)
     {
@@ -15,5 +17,6 @@ internal class DeleteProductRequest(ProductsMongoContext productsMongoContext) :
             throw new NotFoundException(nameof(ProductEntity), $"with id: {id}");
         }
         await productsMongoContext.Collection.DeleteOneAsync(filter, cancellationToken);
+        await publishEndpoint.Publish(new ProductDeletedEvent(product.Id), cancellationToken);
     }
 }

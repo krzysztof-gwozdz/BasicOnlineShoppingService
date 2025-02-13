@@ -1,10 +1,12 @@
 using BasicOnlineShoppingService.Common;
 using BasicOnlineShoppingService.Modules.StoreModule.Products.Dtos;
+using BasicOnlineShoppingService.Modules.StoreModule.Products.Events;
+using MassTransit;
 using MongoDB.Driver;
 
 namespace BasicOnlineShoppingService.Modules.StoreModule.Products.Requests;
 
-internal class AddOrUpdateProductRequest(ProductsMongoContext productsMongoContext) : IRequest
+internal class AddOrUpdateProductRequest(ProductsMongoContext productsMongoContext, IPublishEndpoint publishEndpoint) : IRequest
 {
     public async Task Handle(Guid id, AddProductDto addProductDto, CancellationToken cancellationToken)
     {
@@ -15,6 +17,7 @@ internal class AddOrUpdateProductRequest(ProductsMongoContext productsMongoConte
             var product = Product.Create(addProductDto.Name, addProductDto.Description, addProductDto.Price, addProductDto.Category);
             var productEntity = new ProductEntity(product.Id, product.Name, product.Description, product.Price, product.Category);
             await productsMongoContext.Collection.InsertOneAsync(productEntity, cancellationToken: cancellationToken);
+            await publishEndpoint.Publish(new ProductAddedEvent(id), cancellationToken);
         }
         else
         {
@@ -24,6 +27,7 @@ internal class AddOrUpdateProductRequest(ProductsMongoContext productsMongoConte
                 .Set(productEntity => productEntity.Price, addProductDto.Price)
                 .Set(productEntity => productEntity.Category, addProductDto.Category);
             await productsMongoContext.Collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+            await publishEndpoint.Publish(new ProductUpdatedEvent(id), cancellationToken);
         }
     }
 }

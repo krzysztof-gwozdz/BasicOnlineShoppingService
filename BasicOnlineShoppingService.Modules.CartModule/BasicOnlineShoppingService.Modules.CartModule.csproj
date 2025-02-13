@@ -8,4 +8,20 @@
         <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
+        <PackageReference Include="Scrutor" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+            <_Parameter1>BasicOnlineShoppingService.Modules.StoreModule.Tests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BasicOnlineShoppingService.Common\BasicOnlineShoppingService.Common.csproj" />
+        <ProjectReference Include="..\BasicOnlineShoppingService.Modules.StoreModule\BasicOnlineShoppingService.Modules.StoreModule.csproj" />
+    </ItemGroup>
+
 </Project>
