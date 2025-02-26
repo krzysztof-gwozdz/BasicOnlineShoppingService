@@ -9,8 +9,6 @@ public class ProductEntity(Guid id, string name, string description, decimal pri
 
     public string Name { get; init; } = name;
 
-    public string Description { get; init; } = description;
-
     public decimal Price { get; init; } = price;
 
     public string Category { get; init; } = category;
